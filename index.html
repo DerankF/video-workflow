@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>流程化创造学习视频</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+#root {
+  width: 1080px;
+  height: 1920px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0a0a2e 0%, #1a1a3e 50%, #0d0d2d 100%);
+  data-composition-id="learning-video";
+  data-start="0";
+  data-duration="20";
+  data-width="1080";
+  data-height="1920";
+}
+
+/* ========== 通用场景样式 ========== */
+.scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+
+/* ========== 背景粒子 ========== */
+.particle {
+  position: absolute;
+  background: rgba(255, 215, 0, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.particles-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* ========== 场景1: 焦虑学习 (0-3s) ========== */
+#scene1 {
+  background: radial-gradient(ellipse at center, #1a1a3e 0%, #0a0a1e 100%);
+}
+
+.desk-scene {
+  position: relative;
+  width: 80%;
+  height: 60%;
+}
+
+.book {
+  position: absolute;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.book:nth-child(1) { width: 120px; height: 80px; bottom: 10%; left: 10%; transform: rotate(-15deg); }
+.book:nth-child(2) { width: 100px; height: 70px; bottom: 15%; left: 25%; transform: rotate(8deg); }
+.book:nth-child(3) { width: 110px; height: 75px; bottom: 20%; right: 15%; transform: rotate(-5deg); }
+.book:nth-child(4) { width: 90px; height: 60px; bottom: 5%; left: 40%; transform: rotate(12deg); }
+
+.laptop {
+  position: absolute;
+  width: 200px;
+  height: 130px;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #2d2d5e 0%, #1a1a3e 100%);
+  border-radius: 10px 10px 0 0;
+  border: 3px solid #4a4a8e;
+}
+
+.laptop::after {
+  content: '???';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ff6b6b;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.stress-lines {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+}
+
+.stress-line {
+  position: absolute;
+  background: rgba(255, 107, 107, 0.3);
+  height: 2px;
+}
+
+.stress-line:nth-child(1) { width: 100px; top: 20%; left: 10%; transform: rotate(25deg); }
+.stress-line:nth-child(2) { width: 80px; top: 30%; right: 10%; transform: rotate(-20deg); }
+.stress-line:nth-child(3) { width: 120px; top: 50%; left: 5%; transform: rotate(15deg); }
+
+/* ========== 场景2: 知识混乱 (3-6s) ========== */
+#scene2 {
+  background: radial-gradient(ellipse at center, #2d1b4e 0%, #0f0a1e 100%);
+}
+
+.brain-center {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.chaos-symbol {
+  position: absolute;
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.6);
+  animation: float 3s infinite ease-in-out;
+}
+
+.chaos-symbol:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; content: '?'; }
+.chaos-symbol:nth-child(2) { top: 20%; right: 15%; animation-delay: 0.5s; }
+.chaos-symbol:nth-child(3) { bottom: 30%; left: 10%; animation-delay: 1s; }
+.chaos-symbol:nth-child(4) { bottom: 15%; right: 20%; animation-delay: 1.5s; }
+.chaos-symbol:nth-child(5) { top: 50%; left: 5%; animation-delay: 2s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+/* ========== 场景3: 流程化思维金光 (6-10s) ========== */
+#scene3 {
+  background: radial-gradient(ellipse at center, #0a0a2e 0%, #000 100%);
+}
+
+.lightning-bolt {
+  position: absolute;
+  width: 10px;
+  height: 600px;
+  background: linear-gradient(180deg, rgba(255, 215, 0, 0) 0%, rgba(255, 215, 0, 1) 50%, rgba(255, 215, 0, 0) 100%);
+  filter: blur(3px);
+  box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
+}
+
+.title-main {
+  font-size: 120px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ffd700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 80px rgba(255, 215, 0, 0.5);
+  letter-spacing: 20px;
+  z-index: 10;
+}
+
+.subtitle {
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 40px;
+  letter-spacing: 10px;
+  z-index: 10;
+}
+
+/* ========== 场景4: 三步阶梯 (10-15s) ========== */
+#scene4 {
+  background: radial-gradient(ellipse at center, #0a1a3e 0%, #050a1e 100%);
+}
+
+.steps-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+}
+
+.step {
+  width: 600px;
+  padding: 60px;
+  border-radius: 30px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.step-1 {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+  border: 2px solid rgba(102, 126, 234, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+.step-2 {
+  background: linear-gradient(135deg, rgba(72, 219, 251, 0.3) 0%, rgba(142, 68, 173, 0.3) 100%);
+  border: 2px solid rgba(72, 219, 251, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+.step-3 {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.3) 100%);
+  border: 2px solid rgba(255, 215, 0, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+.step-number {
+  font-size: 60px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 20px;
+}
+
+.step-title {
+  font-size: 80px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 15px;
+}
+
+.step-1 .step-title { color: #667eea; }
+.step-2 .step-title { color: #48dbfb; }
+.step-3 .step-title { color: #ffd700; }
+
+.arrow-down {
+  font-size: 60px;
+  color: rgba(255, 255, 255, 0.3);
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(20px); }
+}
+
+/* ========== 场景5: 火箭上升 (15-18s) ========== */
+#scene5 {
+  background: radial-gradient(ellipse at bottom, #1a0a2e 0%, #000 100%);
+}
+
+.rocket-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.rocket {
+  font-size: 200px;
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.stats {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 100px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffd700 0%, #ff6b6b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-label {
+  font-size: 40px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 20px;
+}
+
+/* ========== 场景6: 接力棒引导 (18-20s) ========== */
+#scene6 {
+  background: radial-gradient(ellipse at center, #1a1a3e 0%, #0a0a1e 100%);
+}
+
+.hand-transfer {
+  font-size: 180px;
+  margin-bottom: 60px;
+}
+
+.cta-text {
+  font-size: 70px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  line-height: 1.6;
+  letter-spacing: 8px;
+}
+
+.comment-bubble {
+  position: absolute;
+  bottom: 15%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40px 60px;
+  border-radius: 30px;
+  font-size: 50px;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.5);
+}
+
+/* ========== 字幕样式 ========== */
+.subtitle-bar {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 30px 60px;
+  border-radius: 20px;
+  font-size: 44px;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 4px;
+  max-width: 80%;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ========== 标签/Hashtag ========== */
+.hashtags {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 100;
+}
+
+.hashtag {
+  font-size: 32px;
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* ========== 水印/Logo ========== */
+.watermark {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.4);
+  z-index: 100;
+}
+</style>
+</head>
+<body>
+
+<div id="root" data-composition-id="learning-video" data-start="0" data-duration="20" data-width="1080" data-height="1920">
+
+  <!-- 粒子背景 -->
+  <div class="particles-container" id="particles"></div>
+
+  <!-- ========== 场景1: 焦虑学习 (0-3s) ========== -->
+  <div id="scene1" class="scene">
+    <div class="hashtags">
+      <span class="hashtag">#学习方法</span>
+      <span class="hashtag">#自我提升</span>
+    </div>
+    <div class="desk-scene">
+      <div class="book"></div>
+      <div class="book"></div>
+      <div class="book"></div>
+      <div class="book"></div>
+      <div class="laptop"></div>
+      <div class="stress-lines">
+        <div class="stress-line"></div>
+        <div class="stress-line"></div>
+        <div class="stress-line"></div>
+      </div>
+    </div>
+    <div class="subtitle-bar" id="sub1">你是不是也这样?</div>
+  </div>
+
+  <!-- ========== 场景2: 知识混乱 (3-6s) ========== -->
+  <div id="scene2" class="scene">
+    <div class="brain-center">
+      <div class="chaos-symbol">?</div>
+      <div class="chaos-symbol">✦</div>
+      <div class="chaos-symbol">⚡</div>
+      <div class="chaos-symbol">◆</div>
+      <div class="chaos-symbol">?</div>
+    </div>
+    <div class="subtitle-bar" id="sub2" style="opacity:0;">最后还是什么都不会?</div>
+  </div>
+
+  <!-- ========== 场景3: 流程化思维金光 (6-10s) ========== -->
+  <div id="scene3" class="scene">
+    <div class="lightning-bolt" id="bolt"></div>
+    <div class="title-main" id="mainTitle">流程化思维</div>
+    <div class="subtitle" id="subtitle1">改变从思维开始</div>
+    <div class="subtitle-bar" id="sub3" style="opacity:0;">不是因为你不努力<br>是因为你没有"流程化思维"</div>
+  </div>
+
+  <!-- ========== 场景4: 三步阶梯 (10-15s) ========== -->
+  <div id="scene4" class="scene">
+    <div class="steps-container" id="stepsContainer">
+      <div class="step step-1" id="step1">
+        <div class="step-number">01</div>
+        <div class="step-title">拆解</div>
+      </div>
+      <div class="arrow-down" id="arrow1">↓</div>
+      <div class="step step-2" id="step2">
+        <div class="step-number">02</div>
+        <div class="step-title">模仿</div>
+      </div>
+      <div class="arrow-down" id="arrow2">↓</div>
+      <div class="step step-3" id="step3">
+        <div class="step-number">03</div>
+        <div class="step-title">创造</div>
+      </div>
+    </div>
+    <div class="subtitle-bar" id="sub4" style="opacity:0;">学会这3步,把知识变成能力</div>
+  </div>
+
+  <!-- ========== 场景5: 火箭上升 (15-18s) ========== -->
+  <div id="scene5" class="scene">
+    <div class="rocket-container">
+      <div class="stats" id="statsContainer">
+        <div class="stat-number" id="statNum">0</div>
+        <div class="stat-label">粉丝增长</div>
+      </div>
+      <div class="rocket" id="rocket">🚀</div>
+    </div>
+    <div class="subtitle-bar" id="sub5" style="opacity:0;">一个月产出30条爆款<br>粉丝翻了10倍</div>
+  </div>
+
+  <!-- ========== 场景6: 接力棒引导 (18-20s) ========== -->
+  <div id="scene6" class="scene">
+    <div class="hand-transfer" id="hands">🤝</div>
+    <div class="cta-text" id="ctaText">
+      你不是学不会<br>你只是没人教你怎么学
+    </div>
+    <div class="comment-bubble" id="commentBubble">💬 评论区告诉我!<br>你最想学什么技能?</div>
+  </div>
+
+  <!-- 水印 -->
+  <div class="watermark">@流程化创造</div>
+
+</div>
+
+<script>
+// ========== 粒子背景 ==========
+(function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    const size = Math.random() * 6 + 2;
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    particle.style.opacity = Math.random() * 0.5 + 0.2;
+    container.appendChild(particle);
+  }
+})();
+
+// ========== 主时间线 ==========
+window.__timelines['learning-video'] = gsap.timeline({ paused: true });
+const tl = window.__timelines['learning-video'];
+
+// --- 场景1: 焦虑学习 (0-3s) ---
+tl.to('#scene1', { opacity: 1, duration: 0.3 }, 0);
+tl.from('#sub1', { opacity: 0, y: 50, duration: 0.5, ease: 'back.out(1.5)' }, 0.5);
+tl.to('.book', { rotation: 'random(-10, 10)', yoyo: true, repeat: 2, duration: 0.4 }, 1);
+tl.to('.laptop', { boxShadow: '0 0 60px rgba(255, 107, 107, 0.6)', yoyo: true, repeat: 3, duration: 0.3 }, 1.5);
+tl.to('#sub1', { opacity: 0, y: -30, duration: 0.3 }, 2.5);
+tl.to('#scene1', { opacity: 0, duration: 0.3 }, 2.7);
+
+// --- 场景2: 知识混乱 (3-6s) ---
+tl.to('#scene2', { opacity: 1, duration: 0.3 }, 3);
+tl.from('.brain-center', { scale: 0.5, opacity: 0, duration: 0.8, ease: 'elastic.out(1, 0.5)' }, 3.2);
+tl.from('.chaos-symbol', { opacity: 0, rotation: 'random(-180, 180)', duration: 0.5, stagger: 0.15 }, 3.5);
+tl.to('#sub2', { opacity: 1, y: 0, duration: 0.5 }, 4);
+tl.to('#sub2', { opacity: 0, duration: 0.3 }, 5.5);
+tl.to('#scene2', { opacity: 0, duration: 0.3 }, 5.7);
+
+// --- 场景3: 流程化思维金光 (6-10s) ---
+tl.to('#scene3', { opacity: 1, duration: 0.3 }, 6);
+tl.from('#bolt', { height: 0, opacity: 0, duration: 0.4, ease: 'power4.in' }, 6.2);
+tl.from('#mainTitle', { opacity: 0, scale: 0.5, letterSpacing: '60px', duration: 0.8, ease: 'back.out(2)' }, 6.6);
+tl.from('#subtitle1', { opacity: 0, y: 30, duration: 0.5 }, 7.4);
+tl.to('#sub3', { opacity: 1, y: 0, duration: 0.5 }, 7.8);
+tl.to('#mainTitle', { textShadow: '0 0 120px rgba(255, 215, 0, 0.8)', duration: 0.5 }, 8);
+tl.to('#sub3', { opacity: 0, duration: 0.3 }, 9.5);
+tl.to('#scene3', { opacity: 0, duration: 0.3 }, 9.7);
+
+// --- 场景4: 三步阶梯 (10-15s) ---
+tl.to('#scene4', { opacity: 1, duration: 0.3 }, 10);
+tl.to('#step1', { opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.5)' }, 10.5);
+tl.to('#arrow1', { opacity: 1, scale: 1.5, duration: 0.3 }, 11);
+tl.to('#step2', { opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.5)' }, 11.3);
+tl.to('#arrow2', { opacity: 1, scale: 1.5, duration: 0.3 }, 11.8);
+tl.to('#step3', { opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.5)' }, 12.1);
+tl.to('#sub4', { opacity: 1, y: 0, duration: 0.5 }, 12.8);
+tl.to('#step1', { borderColor: 'rgba(102, 126, 234, 1)', boxShadow: '0 0 40px rgba(102, 126, 234, 0.5)', duration: 0.3 }, 13);
+tl.to('#step2', { borderColor: 'rgba(72, 219, 251, 1)', boxShadow: '0 0 40px rgba(72, 219, 251, 0.5)', duration: 0.3 }, 13.5);
+tl.to('#step3', { borderColor: 'rgba(255, 215, 0, 1)', boxShadow: '0 0 40px rgba(255, 215, 0, 0.5)', duration: 0.3 }, 14);
+tl.to('#sub4', { opacity: 0, duration: 0.3 }, 14.5);
+tl.to('#scene4', { opacity: 0, duration: 0.3 }, 14.7);
+
+// --- 场景5: 火箭上升 (15-18s) ---
+tl.to('#scene5', { opacity: 1, duration: 0.3 }, 15);
+tl.from('#rocket', { bottom: '-20%', scale: 0.5, duration: 0.8, ease: 'power2.out' }, 15.3);
+tl.to('#rocket', { bottom: '55%', scale: 1.3, duration: 1.5, ease: 'power1.inOut' }, 15.5);
+// 数字滚动
+const counter = { val: 0 };
+tl.to(counter, {
+  val: 100000,
+  duration: 1.5,
+  ease: 'power2.out',
+  onUpdate: function() {
+    const el = document.getElementById('statNum');
+    if (el) el.textContent = Math.round(counter.val).toLocaleString();
+  }
+}, 15.5);
+tl.to('#sub5', { opacity: 1, y: 0, duration: 0.5 }, 16);
+tl.to('#sub5', { opacity: 0, duration: 0.3 }, 17.5);
+tl.to('#scene5', { opacity: 0, duration: 0.3 }, 17.7);
+
+// --- 场景6: 接力棒引导 (18-20s) ---
+tl.to('#scene6', { opacity: 1, duration: 0.3 }, 18);
+tl.from('#hands', { scale: 0, rotation: -180, duration: 0.8, ease: 'elastic.out(1, 0.4)' }, 18.2);
+tl.from('#ctaText', { opacity: 0, y: 40, duration: 0.6 }, 18.6);
+tl.from('#commentBubble', { opacity: 0, y: 60, scale: 0.8, duration: 0.6, ease: 'back.out(1.5)' }, 19);
+tl.to('#commentBubble', { boxShadow: '0 20px 80px rgba(102, 126, 234, 0.8)', yoyo: true, repeat: 2, duration: 0.3 }, 19.2);
+
+// 最后定格
+tl.to('#commentBubble', { scale: 1.1, duration: 0.3 }, 19.5);
+
+</script>
+
+</body>
+</html>

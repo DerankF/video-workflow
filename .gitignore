@@ -1,0 +1,5 @@
+
+# 2026-10-25 GitHub 100MB 红线：chromium运行时二进制不入库(本地保留)
+1/chromium-1223/
+1/chromium_headless_shell-1223/
+*.log

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>流程化创造学习视频 - 最终版V2</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#video{width:1080px;height:1920px;position:relative;overflow:hidden;
+  font-family:'PingFang SC','Microsoft YaHei','Segoe UI',sans-serif}
+.sc{position:absolute;top:0;left:0;width:1080px;height:1920px;opacity:0;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  transition:opacity 0.4s ease}
+
+/* ===== 场景1: 焦虑学习 0-3s ===== */
+.sc1{background:radial-gradient(ellipse at 50% 40%,#1a1a3e 0%,#0a0a1e 100%)}
+.books{display:flex;gap:40px;margin-bottom:80px}
+.book{width:150px;height:100px;border-radius:12px;box-shadow:0 8px 25px rgba(0,0,0,0.4)}
+.b1{background:linear-gradient(135deg,#667eea,#764ba2)}
+.b2{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.b3{background:linear-gradient(135deg,#4facfe,#00f2fe)}
+.b4{background:linear-gradient(135deg,#43e97b,#38f9d7)}
+.laptop{width:280px;height:180px;background:linear-gradient(180deg,#2d2d5e,#1a1a3e);
+  border-radius:15px;border:3px solid #4a4a8e;margin-bottom:50px;
+  display:flex;justify-content:center;align-items:center}
+.laptop span{color:#ff6b6b;font-size:56px;font-weight:900}
+.txt{background:rgba(0,0,0,0.7);padding:35px 70px;border-radius:20px;
+  font-size:48px;color:#fff;text-align:center;letter-spacing:6px;
+  backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1)}
+
+/* ===== 场景2: 知识混乱 3-7s ===== */
+.sc2{background:radial-gradient(ellipse at 50% 40%,#2d1b4e 0%,#0f0a1e 100%)}
+.brain{width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(102,126,234,0.3),transparent 70%);
+  display:flex;justify-content:center;align-items:center;position:relative}
+.sym{position:absolute;font-size:56px;color:rgba(255,255,255,0.7)}
+.sy1{top:8%;left:18%}.sy2{top:18%;right:12%}.sy3{bottom:28%;left:6%}
+.sy4{bottom:12%;right:16%}.sy5{top:48%;left:2%}
+
+/* ===== 场景3: 金光 7-11s ===== */
+.sc3{background:#000}
+.bolt{position:absolute;width:12px;left:50%;top:50%;margin-left:-6px;margin-top:-350px;
+  background:linear-gradient(180deg,rgba(255,215,0,0) 0%,rgba(255,215,0,1) 50%,rgba(255,215,0,0) 100%);
+  filter:blur(3px);box-shadow:0 0 80px rgba(255,215,0,0.9)}
+.big{font-size:140px;font-weight:900;
+  background:linear-gradient(135deg,#ffd700,#ffaa00,#ffd700);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:25px;text-shadow:0 0 100px rgba(255,215,0,0.6)}
+.sub{font-size:52px;color:rgba(255,255,255,0.85);margin-top:45px}
+.desc{background:rgba(0,0,0,0.7);padding:30px 60px;border-radius:20px;
+  font-size:40px;color:#fff;text-align:center;line-height:1.8;letter-spacing:3px;
+  position:absolute;bottom:18%;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1)}
+
+/* ===== 场景4: 三步阶梯 11-16s ===== */
+.sc4{background:radial-gradient(ellipse at 50% 40%,#0a1a3e 0%,#050a1e 100%)}
+.step{width:750px;padding:55px;border-radius:30px;text-align:center;margin:15px 0}
+.st1{background:rgba(102,126,234,0.25);border:2px solid rgba(102,126,234,0.5);backdrop-filter:blur(10px)}
+.st2{background:rgba(72,219,251,0.25);border:2px solid rgba(72,219,251,0.5);backdrop-filter:blur(10px)}
+.st3{background:rgba(255,215,0,0.25);border:2px solid rgba(255,215,0,0.5);backdrop-filter:blur(10px)}
+.sn{font-size:65px;font-weight:900;color:rgba(255,255,255,0.25);margin-bottom:25px}
+.st{font-size:90px;font-weight:900;letter-spacing:18px}
+.st1 .st{color:#667eea}.st2 .st{color:#48dbfb}.st3 .st{color:#ffd700}
+.arr{font-size:65px;color:rgba(255,255,255,0.3);margin:10px 0}
+
+/* ===== 场景5: 火箭 16-19s ===== */
+.sc5{background:radial-gradient(ellipse at 50% 80%,#1a0a2e 0%,#000 100%)}
+.stats{text-align:center;margin-bottom:100px}
+.num{font-size:110px;font-weight:900;
+  background:linear-gradient(135deg,#ffd700,#ff6b6b);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lbl{font-size:42px;color:rgba(255,255,255,0.8);margin-top:20px}
+.rocket{font-size:220px}
+
+/* ===== 场景6: 引导 19-22s ===== */
+.sc6{background:radial-gradient(ellipse at 50% 40%,#1a1a3e 0%,#0a0a1e 100%)}
+.hand{font-size:200px;margin-bottom:60px}
+.cta{font-size:65px;font-weight:700;color:#fff;text-align:center;line-height:1.8;letter-spacing:10px}
+.bubble{position:absolute;bottom:15%;background:linear-gradient(135deg,#667eea,#764ba2);
+  padding:45px 65px;border-radius:30px;font-size:52px;color:#fff;font-weight:700;
+  text-align:center;line-height:1.6;box-shadow:0 20px 70px rgba(102,126,234,0.6)}
+
+.wm{position:absolute;top:5%;right:5%;font-size:28px;color:rgba(255,255,255,0.35);z-index:200}
+</style>
+</head>
+<body>
+<div id="video">
+  <div class="sc sc1" id="s1">
+    <div class="books"><div class="book b1"></div><div class="book b2"></div><div class="book b3"></div><div class="book b4"></div></div>
+    <div class="laptop"><span>???</span></div>
+    <div class="txt">你是不是也这样?</div>
+  </div>
+  <div class="sc sc2" id="s2">
+    <div class="brain">
+      <div class="sy1 sym">?</div><div class="sy2 sym">✦</div><div class="sy3 sym">⚡</div>
+      <div class="sy4 sym">◆</div><div class="sy5 sym">?</div>
+    </div>
+    <div class="txt">学了一堆课,最后还是什么都不会?</div>
+  </div>
+  <div class="sc sc3" id="s3">
+    <div class="bolt"></div>
+    <div class="big">流程化思维</div>
+    <div class="sub">改变从思维开始</div>
+    <div class="desc">不是因为你不努力<br>是因为你没有"流程化思维"</div>
+  </div>
+  <div class="sc sc4" id="s4">
+    <div class="step st1"><div class="sn">01</div><div class="st">拆 解</div></div>
+    <div class="arr">↓</div>
+    <div class="step st2"><div class="sn">02</div><div class="st">模 仿</div></div>
+    <div class="arr">↓</div>
+    <div class="step st3"><div class="sn">03</div><div class="st">创 造</div></div>
+    <div class="txt">学会这3步,把知识变成能力</div>
+  </div>
+  <div class="sc sc5" id="s5">
+    <div class="stats"><div class="num" id="counter">0</div><div class="lbl">粉丝增长</div></div>
+    <div class="rocket">🚀</div>
+  </div>
+  <div class="sc sc6" id="s6">
+    <div class="hand">🤝</div>
+    <div class="cta">你不是学不会<br>你只是没人教你怎么学</div>
+    <div class="bubble">💬 评论区告诉我!<br>你最想学什么技能?</div>
+  </div>
+  <div class="wm">@流程化创造</div>
+</div>
+
+<script>
+// ===== 使用setTimeout + setInterval (兼容headless模式) =====
+const S = { // 场景显示配置 {appear, vanish, subtitle_text}
+  s1: { t_start: 0,   t_end: 3,   sub: '你是不是也这样?' },
+  s2: { t_start: 3,   t_end: 7,   sub: '学了一堆课,最后还是什么都不会?' },
+  s3: { t_start: 7,   t_end: 11,  sub: '流程化思维' },
+  s4: { t_start: 11,  t_end: 16,  sub: '学会这3步,把知识变成能力' },
+  s5: { t_start: 16,  t_end: 19,  sub: '' },
+  s6: { t_start: 19,  t_end: 22,  sub: '' },
+};
+
+const start = Date.now();
+const TOTAL = 24000; // 24秒
+
+function tick(){
+  const elapsed = Date.now() - start;
+
+  // 1. 隐藏所有场景
+  for(const [id, cfg] of Object.entries(S)){
+    const el = document.getElementById(id);
+    if(el){
+      const inRange = elapsed >= cfg.t_start * 1000 && elapsed < cfg.t_end * 1000;
+      el.style.opacity = inRange ? '1' : '0';
+    }
+  }
+
+  // 2. 场景3: 金光逐步显现
+  if(elapsed >= 7000 && elapsed < 11000){
+    const bolt = document.querySelector('.bolt');
+    if(bolt){
+      const p = Math.min((elapsed-7000)/400, 1);
+      bolt.style.opacity = String(p);
+      bolt.style.height = (700*p) + 'px';
+      bolt.style.marginTop = (-350*p) + 'px';
+    }
+    const big = document.querySelector('.big');
+    if(big){
+      const p2 = Math.max(0, Math.min((elapsed-7400)/600, 1));
+      big.style.opacity = String(p2);
+      big.style.transform = `scale(${0.5 + 0.5*p2})`;
+    }
+    const sub = document.querySelector('.sub');
+    if(sub) sub.style.opacity = String(Math.max(0, Math.min((elapsed-7800)/400, 1)));
+    const desc = document.querySelector('.desc');
+    if(desc) desc.style.opacity = String(Math.max(0, Math.min((elapsed-8200)/500, 1)));
+  }
+
+  // 3. 场景4: 阶梯逐个亮起
+  if(elapsed >= 11000 && elapsed < 16000){
+    const steps = document.querySelectorAll('.sc4 .step');
+    steps.forEach((s,i) => {
+      const appearT = 11000 + i * 700;
+      if(elapsed >= appearT){
+        const p = Math.min((elapsed - appearT)/600, 1);
+        s.style.opacity = String(p);
+        s.style.transform = `translateY(${100*(1-p)}px)`;
+      }
+    });
+    const arrows = document.querySelectorAll('.sc4 .arr');
+    arrows.forEach((a,i) => {
+      const appearT = 11000 + 600 + i * 700;
+      if(elapsed >= appearT){
+        const p = Math.min((elapsed - appearT)/400, 1);
+        a.style.opacity = String(p);
+        a.style.transform = `scale(${0.5+0.5*p})`;
+      }
+    });
+  }
+
+  // 4. 场景5: 火箭动画
+  if(elapsed >= 16000 && elapsed < 19000){
+    const rk = document.querySelector('.rocket');
+    if(rk){
+      rk.style.opacity = '1';
+      rk.style.transform = `translateY(${100 * (1 - Math.min((elapsed-16000)/1500,1))}px)`;
+    }
+    const nm = document.querySelector('#counter');
+    if(nm){
+      const p = Math.min((elapsed-16000)/1500, 1);
+      nm.textContent = Math.round(100000 * p).toLocaleString();
+    }
+  }
+
+  if(elapsed >= TOTAL){
+    // 最后保持场景6
+    const s6 = document.getElementById('s6');
+    if(s6) s6.style.opacity = '1';
+  }
+}
+
+// 每33ms (~30fps)执行一次，确保headless模式下也能跑
+setInterval(tick, 33);
+// 立即执行一次
+tick();
+</script>
+</body>
+</html>

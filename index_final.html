@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>流程化创造学习视频 - 最终版</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#video{width:1080px;height:1920px;position:relative;overflow:hidden;font-family:'PingFang SC','Microsoft YaHei',sans-serif}
+.sc{position:absolute;top:0;left:0;width:1080px;height:1920px;opacity:0;display:flex;flex-direction:column;justify-content:center;align-items:center}
+
+/* ===== 场景1: 焦虑学习 0-3s ===== */
+.sc1{background:radial-gradient(ellipse at 50% 40%,#1a1a3e,#0a0a1e)}
+.sc1 .books{display:flex;gap:40px;margin-bottom:80px}
+.sc1 .book{width:150px;height:100px;border-radius:12px;box-shadow:0 8px 25px rgba(0,0,0,0.4)}
+.sc1 .b1{background:linear-gradient(135deg,#667eea,#764ba2)}
+.sc1 .b2{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.sc1 .b3{background:linear-gradient(135deg,#4facfe,#00f2fe)}
+.sc1 .b4{background:linear-gradient(135deg,#43e97b,#38f9d7)}
+.sc1 .laptop{width:280px;height:180px;background:linear-gradient(180deg,#2d2d5e,#1a1a3e);border-radius:15px;border:3px solid #4a4a8e;margin-bottom:50px;display:flex;justify-content:center;align-items:center}
+.sc1 .laptop span{color:#ff6b6b;font-size:56px;font-weight:900}
+.sc1 .txt{background:rgba(0,0,0,0.7);padding:35px 70px;border-radius:20px;font-size:48px;color:#fff;text-align:center;letter-spacing:6px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1)}
+
+/* ===== 场景2: 知识混乱 3-7s ===== */
+.sc2{background:radial-gradient(ellipse at 50% 40%,#2d1b4e,#0f0a1e)}
+.sc2 .brain{width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(102,126,234,0.3),transparent 70%);display:flex;justify-content:center;align-items:center;position:relative}
+.sc2 .sym{position:absolute;font-size:56px;color:rgba(255,255,255,0.7)}
+.sc2 .s1{top:8%;left:18%}
+.sc2 .s2{top:18%;right:12%}
+.sc2 .s3{bottom:28%;left:6%}
+.sc2 .s4{bottom:12%;right:16%}
+.sc2 .s5{top:48%;left:2%}
+.sc2 .txt{background:rgba(0,0,0,0.7);padding:35px 70px;border-radius:20px;font-size:46px;color:#fff;text-align:center;margin-top:70px;letter-spacing:4px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1)}
+
+/* ===== 场景3: 金光 7-11s ===== */
+.sc3{background:#000}
+.sc3 .bolt{position:absolute;width:12px;left:50%;top:50%;margin-left:-6px;margin-top:-350px;background:linear-gradient(180deg,rgba(255,215,0,0) 0%,rgba(255,215,0,1) 50%,rgba(255,215,0,0) 100%);filter:blur(3px);box-shadow:0 0 80px rgba(255,215,0,0.9)}
+.sc3 .big{font-size:140px;font-weight:900;background:linear-gradient(135deg,#ffd700,#ffaa00,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:25px;text-shadow:0 0 100px rgba(255,215,0,0.6)}
+.sc3 .sub{font-size:52px;color:rgba(255,255,255,0.85);margin-top:45px}
+.sc3 .desc{background:rgba(0,0,0,0.7);padding:30px 60px;border-radius:20px;font-size:40px;color:#fff;text-align:center;line-height:1.8;letter-spacing:3px;position:absolute;bottom:18%;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1)}
+
+/* ===== 场景4: 三步阶梯 11-16s ===== */
+.sc4{background:radial-gradient(ellipse at 50% 40%,#0a1a3e,#050a1e)}
+.sc4 .step{width:750px;padding:55px;border-radius:30px;text-align:center;margin:15px 0}
+.sc4 .s1{background:rgba(102,126,234,0.25);border:2px solid rgba(102,126,234,0.5);backdrop-filter:blur(10px)}
+.sc4 .s2{background:rgba(72,219,251,0.25);border:2px solid rgba(72,219,251,0.5);backdrop-filter:blur(10px)}
+.sc4 .s3{background:rgba(255,215,0,0.25);border:2px solid rgba(255,215,0,0.5);backdrop-filter:blur(10px)}
+.sc4 .sn{font-size:65px;font-weight:900;color:rgba(255,255,255,0.25);margin-bottom:25px}
+.sc4 .st{font-size:90px;font-weight:900;letter-spacing:18px}
+.sc4 .s1 .st{color:#667eea}
+.sc4 .s2 .st{color:#48dbfb}
+.sc4 .s3 .st{color:#ffd700}
+.sc4 .arr{font-size:65px;color:rgba(255,255,255,0.3);margin:10px 0}
+.sc4 .txt{background:rgba(0,0,0,0.7);padding:35px 70px;border-radius:20px;font-size:44px;color:#fff;text-align:center;margin-top:35px;letter-spacing:5px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1)}
+
+/* ===== 场景5: 火箭 16-19s ===== */
+.sc5{background:radial-gradient(ellipse at 50% 80%,#1a0a2e,#000)}
+.sc5 .stats{text-align:center;margin-bottom:100px}
+.sc5 .num{font-size:110px;font-weight:900;background:linear-gradient(135deg,#ffd700,#ff6b6b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sc5 .lbl{font-size:42px;color:rgba(255,255,255,0.8);margin-top:20px}
+.sc5 .rocket{font-size:220px}
+.sc5 .txt{background:rgba(0,0,0,0.7);padding:35px 70px;border-radius:20px;font-size:42px;color:#fff;text-align:center;line-height:1.8;position:absolute;bottom:18%;letter-spacing:4px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1)}
+
+/* ===== 场景6: 引导 19-22s ===== */
+.sc6{background:radial-gradient(ellipse at 50% 40%,#1a1a3e,#0a0a1e)}
+.sc6 .hand{font-size:200px;margin-bottom:60px}
+.sc6 .cta{font-size:65px;font-weight:700;color:#fff;text-align:center;line-height:1.8;letter-spacing:10px}
+.sc6 .bubble{position:absolute;bottom:15%;background:linear-gradient(135deg,#667eea,#764ba2);padding:45px 65px;border-radius:30px;font-size:52px;color:#fff;font-weight:700;text-align:center;line-height:1.6;box-shadow:0 20px 70px rgba(102,126,234,0.6)}
+
+.tag{position:absolute;top:8%;left:50%;transform:translateX(-50%);display:flex;gap:25px;z-index:100}
+.tag span{font-size:30px;color:#667eea;font-weight:600}
+.wm{position:absolute;top:5%;right:5%;font-size:28px;color:rgba(255,255,255,0.35);z-index:200}
+</style>
+</head>
+<body>
+<div id="video">
+  <!-- 场景1 -->
+  <div class="sc sc1" id="s1">
+    <div class="books"><div class="book b1"></div><div class="book b2"></div><div class="book b3"></div><div class="book b4"></div></div>
+    <div class="laptop"><span>???</span></div>
+    <div class="txt">你是不是也这样?</div>
+  </div>
+  <!-- 场景2 -->
+  <div class="sc sc2" id="s2">
+    <div class="brain">
+      <div class="sym s1">?</div><div class="sym s2">✦</div><div class="sym s3">⚡</div>
+      <div class="sym s4">◆</div><div class="sym s5">?</div>
+    </div>
+    <div class="txt">学了一堆课,最后还是什么都不会?</div>
+  </div>
+  <!-- 场景3 -->
+  <div class="sc sc3" id="s3">
+    <div class="bolt"></div>
+    <div class="big">流程化思维</div>
+    <div class="sub">改变从思维开始</div>
+    <div class="desc">不是因为你不努力<br>是因为你没有"流程化思维"</div>
+  </div>
+  <!-- 场景4 -->
+  <div class="sc sc4" id="s4">
+    <div class="step s1"><div class="sn">01</div><div class="st">拆 解</div></div>
+    <div class="arr">↓</div>
+    <div class="step s2"><div class="sn">02</div><div class="st">模 仿</div></div>
+    <div class="arr">↓</div>
+    <div class="step s3"><div class="sn">03</div><div class="st">创 造</div></div>
+    <div class="txt">学会这3步,把知识变成能力</div>
+  </div>
+  <!-- 场景5 -->
+  <div class="sc sc5" id="s5">
+    <div class="stats"><div class="num" id="counter">0</div><div class="lbl">粉丝增长</div></div>
+    <div class="rocket">🚀</div>
+    <div class="txt">一个月产出30条爆款<br>粉丝翻了10倍</div>
+  </div>
+  <!-- 场景6 -->
+  <div class="sc sc6" id="s6">
+    <div class="hand">🤝</div>
+    <div class="cta">你不是学不会<br>你只是没人教你怎么学</div>
+    <div class="bubble">💬 评论区告诉我!<br>你最想学什么技能?</div>
+  </div>
+  <div class="wm">@流程化创造</div>
+</div>
+
+<script>
+(function(){
+  const startTime = Date.now();
+  const TOTAL = 22000; // 22秒
+  
+  const SCENES = [
+    { id:'s1', start:0,    end:3000  },
+    { id:'s2', start:3000, end:7000  },
+    { id:'s3', start:7000, end:11000 },
+    { id:'s4', start:11000,end:16000 },
+    { id:'s5', start:16000,end:19000 },
+    { id:'s6', start:19000,end:22000 },
+  ];
+
+  function update(){
+    const elapsed = Date.now() - startTime;
+    
+    // 隐藏所有场景
+    document.querySelectorAll('.sc').forEach(s => s.style.opacity = '0');
+    
+    // 显示当前场景
+    for(const sc of SCENES){
+      if(elapsed >= sc.start && elapsed < sc.end){
+        const scene = document.getElementById(sc.id);
+        if(scene){
+          scene.style.opacity = '1';
+          
+          // 入场动画
+          const progress = Math.min((elapsed - sc.start) / 500, 1);
+          scene.style.transform = `scale(${0.95 + 0.05 * progress})`;
+        }
+        
+        // 子元素动画
+        switch(sc.id){
+          case 's1':
+            if(elapsed >= sc.start + 300){
+              const b = document.querySelector('#s1 .books');
+              if(b) b.style.opacity = progress.toFixed(2);
+            }
+            if(elapsed >= sc.start + 500){
+              const l = document.querySelector('#s1 .laptop');
+              if(l){ l.style.opacity = '1'; l.style.boxShadow = `0 0 ${30*progress}px rgba(255,107,107,${0.5+0.5*progress})`; }
+            }
+            if(elapsed >= sc.start + 700){
+              const t = document.querySelector('#s1 .txt');
+              if(t) t.style.opacity = String(Math.min((elapsed-sc.start-700)/400,1)).toFixed(2);
+            }
+            if(elapsed >= sc.end - 500){
+              const t = document.querySelector('#s1 .txt');
+              if(t) t.style.opacity = String(Math.max(0,(sc.end-elapsed)/500)).toFixed(2);
+            }
+            break;
+            
+          case 's2':
+            if(elapsed >= sc.start + 300){
+              const br = document.querySelector('#s2 .brain');
+              if(br) br.style.transform = `scale(${Math.min((elapsed-sc.start-300)/400,1)})`;
+            }
+            if(elapsed >= sc.start + 600){
+              const syms = document.querySelectorAll('#s2 .sym');
+              syms.forEach((s,i) => { s.style.opacity = String(Math.min((elapsed-sc.start-600-i*100)/300,1)).toFixed(2); });
+            }
+            if(elapsed >= sc.start + 1000){
+              const t = document.querySelector('#s2 .txt');
+              if(t) t.style.opacity = String(Math.min((elapsed-sc.start-1000)/400,1)).toFixed(2);
+            }
+            if(elapsed >= sc.end - 400){
+              const t = document.querySelector('#s2 .txt');
+              if(t) t.style.opacity = String(Math.max(0,(sc.end-elapsed)/400)).toFixed(2);
+            }
+            break;
+            
+          case 's3':
+            if(elapsed >= sc.start + 200){
+              const bolt = document.querySelector('#s3 .bolt');
+              if(bolt){ bolt.style.opacity = '1'; bolt.style.height = `${700*(Math.min((elapsed-sc.start-200)/300,1))}px`; }
+            }
+            if(elapsed >= sc.start + 400){
+              const big = document.querySelector('#s3 .big');
+              if(big) big.style.opacity = String(Math.min((elapsed-sc.start-400)/400,1)).toFixed(2);
+            }
+            if(elapsed >= sc.start + 800){
+              const sub = document.querySelector('#s3 .sub');
+              if(sub) sub.style.opacity = String(Math.min((elapsed-sc.start-800)/300,1)).toFixed(2);
+            }
+            if(elapsed >= sc.start + 1000){
+              const desc = document.querySelector('#s3 .desc');
+              if(desc) desc.style.opacity = String(Math.min((elapsed-sc.start-1000)/400,1)).toFixed(2);
+            }
+            if(elapsed >= sc.end - 300){
+              document.querySelector('#s3 .desc').style.opacity = String(Math.max(0,(sc.end-elapsed)/300)).toFixed(2);
+            }
+            break;
+            
+          case 's4':
+            if(elapsed >= sc.start + 300){
+              const steps = document.querySelectorAll('#s4 .step');
+              steps.forEach((s,i) => {
+                if(elapsed >= sc.start + 300 + i*500){
+                  s.style.opacity = String(Math.min((elapsed-sc.start-300-i*500)/500,1)).toFixed(2);
+                }
+              });
+            }
+            if(elapsed >= sc.start + 600){
+              const arrs = document.querySelectorAll('#s4 .arr');
+              arrs.forEach((a,i) => {
+                if(elapsed >= sc.start + 600 + i*400){
+                  a.style.opacity = String(Math.min((elapsed-sc.start-600-i*400)/300,1)).toFixed(2);
+                }
+              });
+            }
+            if(elapsed >= sc.start + 1500){
+              const t = document.querySelector('#s4 .txt');
+              if(t) t.style.opacity = String(Math.min((elapsed-sc.start-1500)/400,1)).toFixed(2);
+            }
+            if(elapsed >= sc.end - 400){
+              document.querySelector('#s4 .txt').style.opacity = String(Math.max(0,(sc.end-elapsed)/400)).toFixed(2);
+            }
+            break;
+            
+          case 's5':
+            if(elapsed >= sc.start + 300){
+              const num = document.querySelector('#s5 .num');
+              if(num) num.style.opacity = String(Math.min((elapsed-sc.start-300)/300,1)).toFixed(2);
+            }
+            if(elapsed >= sc.start + 500){
+              const lbl = document.querySelector('#s5 .lbl');
+              if(lbl) lbl.style.opacity = String(Math.min((elapsed-sc.start-500)/300,1)).toFixed(2);
+            }
+            if(elapsed >= sc.start + 700){
+              const rk = document.querySelector('#s5 .rocket');
+              if(rk){
+                rk.style.opacity = '1';
+                const rp = Math.min((elapsed-sc.start-700)/1000,1);
+                rk.style.transform = `translateY(${100*(1-rp)}px) scale(${0.5+0.8*rp})`;
+              }
+            }
+            if(elapsed >= sc.start + 1000){
+              const t = document.querySelector('#s5 .txt');
+              if(t) t.style.opacity = String(Math.min((elapsed-sc.start-1000)/400,1)).toFixed(2);
+            }
+            if(elapsed >= sc.end - 300){
+              document.querySelector('#s5 .txt').style.opacity = String(Math.max(0,(sc.end-elapsed)/300)).toFixed(2);
+            }
+            break;
+            
+          case 's6':
+            if(elapsed >= sc.start + 200){
+              const h = document.querySelector('#s6 .hand');
+              if(h) h.style.opacity = String(Math.min((elapsed-sc.start-200)/500,1)).toFixed(2);
+            }
+            if(elapsed >= sc.start + 600){
+              const c = document.querySelector('#s6 .cta');
+              if(c) c.style.opacity = String(Math.min((elapsed-sc.start-600)/500,1)).toFixed(2);
+            }
+            if(elapsed >= sc.start + 1000){
+              const b = document.querySelector('#s6 .bubble');
+              if(b){
+                b.style.opacity = String(Math.min((elapsed-sc.start-1000)/500,1)).toFixed(2);
+              }
+            }
+            break;
+        }
+      }
+    }
+    
+    // 数字动画
+    const counter = document.getElementById('counter');
+    if(counter && elapsed >= 16500){
+      const p = Math.min((elapsed-16500)/1500, 1);
+      counter.textContent = Math.round(100000 * p).toLocaleString();
+    }
+    
+    if(elapsed < TOTAL){
+      requestAnimationFrame(update);
+    } else {
+      // 最终帧：显示场景6
+      document.getElementById('s6').style.opacity = '1';
+    }
+  }
+  
+  // 延迟启动
+  setTimeout(update, 500);
+})();
+</script>
+</body>
+</html>
